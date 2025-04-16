@@ -1,52 +1,52 @@
-import { ReactNode } from 'react'
-import { FiDownload, FiPrinter, FiPlus, FiMinus } from 'react-icons/fi'
+import React from 'react'
 
-type ButtonProps = {
-  children: ReactNode
-  onClick?: () => void
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
-  size?: 'sm' | 'md' | 'lg'
-  icon?: 'download' | 'print' | 'plus' | 'minus'
-  className?: string
+type ButtonVariant = 'primary' | 'secondary' | 'outline'
+type ButtonSize = 'sm' | 'md' | 'lg'
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant
+  size?: ButtonSize
+  children: React.ReactNode
 }
 
-export const Button = ({
-  children,
-  onClick,
-  variant = 'primary',
-  size = 'md',
-  icon,
-  className = ''
-}: ButtonProps) => {
-  const baseStyles = 'rounded-lg font-medium transition-all flex items-center justify-center gap-2'
-  
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg'
-  }
-  
-  const variantStyles = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white shadow-md',
-    secondary: 'bg-green-600 hover:bg-green-700 text-white shadow-md',
-    outline: 'border border-gray-300 hover:border-blue-500 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400',
-    ghost: 'text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400'
-  }
-  
-  const iconMap = {
-    download: <FiDownload />,
-    print: <FiPrinter />,
-    plus: <FiPlus />,
-    minus: <FiMinus />
-  }
-
-  return (
-    <button
-      onClick={onClick}
-      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
-    >
-      {icon && iconMap[icon]}
-      {children}
-    </button>
-  )
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-base',
+  lg: 'px-6 py-3 text-lg'
 }
+
+const variantClasses = {
+  primary: 'bg-blue-600 hover:bg-blue-700 text-white',
+  secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
+  outline: 'border border-gray-300 hover:border-gray-400 text-gray-700'
+}
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      variant = 'primary',
+      size = 'md',
+      children,
+      className = '',
+      disabled = false,
+      ...props
+    },
+    ref
+  ) => {
+    const baseClasses = 'rounded font-medium transition-all flex items-center justify-center'
+    const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : ''
+
+    return (
+      <button
+        ref={ref}
+        className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${disabledClasses} ${className}`}
+        disabled={disabled}
+        {...props}
+      >
+        {children}
+      </button>
+    )
+  }
+)
+
+Button.displayName = 'Button'
