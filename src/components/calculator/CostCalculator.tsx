@@ -1,8 +1,23 @@
-import { useCostCalculation } from '@/hooks'
-import { Input, Select, RangeSlider } from '@/components/core'
+import { useCostCalculation } from '@/src/hooks/useCostCalculation'
+import { Input } from '@/src/components/core/Input'
+import { Select } from '@/src/components/core/Select'
+import { RangeSlider } from '@/src/components/core/RangeSlider'
 
 export function CostCalculator() {
   const { inputs, updateInputs } = useCostCalculation()
+
+  const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateInputs('area', Number(e.target.value))
+  }
+
+  const handleMaterialChange = (value: string) => {
+    // Type assertion if needed
+    updateInputs('material', value as 'steel-panel' | 'precast-concrete' | 'light-gauge-steel')
+  }
+
+  const handleFloorsChange = (value: number) => {
+    updateInputs('floors', value)
+  }
 
   return (
     <div className="space-y-4">
@@ -15,14 +30,14 @@ export function CostCalculator() {
         name="area"
         type="number"
         value={inputs.area}
-        onChange={(e) => updateInputs('area', Number(e.target.value))}
-        min="500"
+        onChange={handleAreaChange}
+        min={500}
       />
       
       <Select
         label="Material System"
         value={inputs.material}
-        onChange={(value) => updateInputs('material', value)}
+        onChange={handleMaterialChange}
         options={[
           { value: 'steel-panel', label: 'Steel Frame' },
           { value: 'precast-concrete', label: 'Precast Concrete' },
@@ -35,7 +50,7 @@ export function CostCalculator() {
         min={1}
         max={3}
         value={inputs.floors}
-        onChange={(value) => updateInputs('floors', value)}
+        onChange={handleFloorsChange}
       />
     </div>
   )
