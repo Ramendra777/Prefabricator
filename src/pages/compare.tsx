@@ -1,6 +1,7 @@
 import { AppLayout } from '@/src/components/core/AppLayout'
-import { ComparisonTable, SavingsCard } from '@/components/comparison'
-import { FiClock, FiDollarSign, FiLeaf } from 'react-icons/fi'
+import { ComparisonTable } from '@/src/components/comparison/ComparisonTable'
+import { SavingsCard } from '@/src/components/comparison/SavingsCard'
+import { FiClock, FiDollarSign, FiFeather } from 'react-icons/fi'
 
 export default function ComparisonPage() {
   return (
@@ -29,7 +30,7 @@ export default function ComparisonPage() {
           <SavingsCard 
             title="Waste Reduction" 
             value="30-50%" 
-            icon={<FiLeaf className="text-emerald-500" />}
+            icon={<FiFeather className="text-emerald-500" />}
             description="Less material waste on site"
           />
         </div>

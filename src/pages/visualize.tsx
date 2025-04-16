@@ -1,11 +1,20 @@
 import { AppLayout } from '@/src/components/core/AppLayout'
 import { ModelGallery } from '@/src/components/visualization/ModelGallery'
 
-const modelPresets = [
+// Define the type for model presets
+type ModelPreset = {
+  id: number
+  name: string
+  type: 'steel' | 'concrete' | 'wood' // Explicitly match ModelGallery's expected types
+  floors: number
+  area: number
+}
+
+const modelPresets: ModelPreset[] = [
   {
     id: 1,
     name: 'Steel Frame Bungalow',
-    type: 'steel',
+    type: 'steel', // Must be one of 'steel' | 'concrete' | 'wood'
     floors: 1,
     area: 1200
   },
@@ -38,7 +47,7 @@ export default function VisualizePage() {
             <div key={model.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
               <div className="h-64 bg-gray-100 dark:bg-gray-700">
                 <ModelGallery 
-                  materialType={model.type} 
+                  materialType={model.type} // Now type-safe
                   floors={model.floors}
                 />
               </div>
