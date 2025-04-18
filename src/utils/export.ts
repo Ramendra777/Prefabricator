@@ -1,77 +1,87 @@
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
+import type { CostBreakdownItem } from '@/types'
 
-interface TableRow {
-  id: number
-  qty: number | string
-  desc: string
-  rate: number | string
-  unit: string
-  amount: number
-}
-
-export const generatePDF = (data: TableRow[], total: number) => {
+/**
+ * Generate PDF report with Indian number formatting
+ */
+export const generatePDF = (
+  title: string,
+  breakdown: CostBreakdownItem[],
+  total: number,
+  fileName = 'prefab-estimate.pdf'
+): void => {
   const doc = new jsPDF()
   
-  // Title
+  // Title with Indian rupee symbol
+  doc.setFont('helvetica', 'bold')
   doc.setFontSize(18)
-  doc.text('PREFAB CONSTRUCTION COST ESTIMATE', 14, 20)
+  doc.text(title, 14, 20)
   
-  // Table
+  // Cost breakdown table
   autoTable(doc, {
-    head: [['Item', 'Qty', 'Description', 'Rate', 'Unit', 'Amount (₹)']],
-    body: data.map(row => [
-      row.id,
-      typeof row.qty === 'number' ? row.qty.toString() : row.qty,
-      row.desc,
-      typeof row.rate === 'number' ? row.rate.toString() : row.rate,
-      row.unit,
-      row.amount.toLocaleString('en-IN')
+    head: [['Item', 'Amount (₹)']],
+    body: breakdown.map(item => [
+      item.name,
+      new Intl.NumberFormat('en-IN').format(item.value)
     ]),
     startY: 30,
-    headStyles: { fillColor: [41, 128, 185] }
+    styles: { 
+      font: 'helvetica',
+      fontSize: 10,
+      cellPadding: 5
+    },
+    headStyles: {
+      fillColor: [41, 128, 185],
+      textColor: 255,
+      fontStyle: 'bold'
+    }
   })
 
-  // Total row
+  // Total with Indian formatting
   autoTable(doc, {
     body: [[
-      { content: 'TOTAL COST', colSpan: 5, styles: { halign: 'right' } },
-      { content: '₹' + total.toLocaleString('en-IN'), styles: { fontStyle: 'bold' } }
+      { 
+        content: 'TOTAL COST', 
+        styles: { fontStyle: 'bold', halign: 'right' } 
+      },
+      { 
+        content: '₹' + new Intl.NumberFormat('en-IN').format(total),
+        styles: { fontStyle: 'bold' }
+      }
     ]],
     startY: (doc as any).lastAutoTable.finalY + 10
   })
 
-  doc.save('prefab-cost-estimate.pdf')
+  doc.save(fileName)
 }
 
-export const generateExcel = (data: TableRow[], total: number) => {
-  const worksheetData = [
-    ['Item', 'Qty', 'Description', 'Rate', 'Unit', 'Amount (₹)'],
-    ...data.map(row => [
-      row.id,
-      row.qty,
-      row.desc,
-      row.rate,
-      row.unit,
-      row.amount
-    ]),
-    ['', '', '', '', 'TOTAL COST', total]
-  ]
-
+/**
+ * Export to Excel with Indian formatting
+ */
+export const generateExcel = (
+  data: any[],
+  sheetName = 'Cost Estimate',
+  fileName = 'prefab-estimate.xlsx'
+): void => {
   const workbook = XLSX.utils.book_new()
-  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData)
-  
-  // Add some styling
-  worksheet['!cols'] = [
-    { width: 5 },  // Item
-    { width: 8 },  // Qty
-    { width: 35 }, // Description
-    { width: 10 }, // Rate
-    { width: 8 },  // Unit
-    { width: 15 }  // Amount
-  ]
+  const worksheet = XLSX.utils.json_to_sheet(data)
 
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Cost Estimate')
-  XLSX.writeFile(workbook, 'prefab-cost-estimate.xlsx')
+  // Add Indian rupee format
+  const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1')
+  for (let C = range.s.c; C <= range.e.c; ++C) {
+    const header = XLSX.utils.encode_col(C) + '1'
+    if (worksheet[header]?.v.includes('Amount')) {
+      for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+        const cell = XLSX.utils.encode_cell({ r: R, c: C })
+        if (worksheet[cell]) {
+          worksheet[cell].z = '[₹]#,##0.00'
+        }
+      }
+    }
+  }
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, sheetName)
+  XLSX.writeFile(workbook, fileName)
 }
