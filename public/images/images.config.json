@@ -1,0 +1,12 @@
+{
+    "breakpoints": [640, 768, 1024, 1280],
+    "formats": ["webp", "jpg"],
+    "defaultQuality": 80,
+    "sources": {
+      "prefab-sample-1": {
+        "description": "Completed 1BHK prefab home in urban setting",
+        "photographer": "Jane Doe",
+        "year": 2023
+      }
+    }
+  }
