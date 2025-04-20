@@ -2,25 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
-body {
-  @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200;
+/* Custom base styles */
+@layer base {
+  :root {
+    --color-primary: 59 130 246;    /* blue-500 */
+    --color-secondary: 16 185 129;  /* emerald-500 */
+    --color-accent: 245 158 11;     /* amber-500 */
+    --color-danger: 239 68 68;      /* red-500 */
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 transition-colors duration-200;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-200 dark:bg-gray-700;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-blue-500 rounded-full hover:bg-blue-600;
+  }
 }
 
-/* For Webkit browsers like Chrome, Safari */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+/* Custom components */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
 
-::-webkit-scrollbar-track {
-  @apply bg-gray-200 dark:bg-gray-700;
-}
+  .btn-primary {
+    @apply btn bg-blue-600 text-white hover:bg-blue-700;
+  }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-blue-500 rounded-full;
-}
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-blue-600;
+  .input {
+    @apply block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white;
+  }
+
+  .card {
+    @apply rounded-xl bg-white shadow-md dark:bg-gray-800 overflow-hidden;
+  }
 }

@@ -1,6 +1,6 @@
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { useCostCalculation } from '@/src/hooks/useCostCalculation'
+import { useCostCalculation } from '@src/hooks/useCostCalculation'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 

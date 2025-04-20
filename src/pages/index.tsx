@@ -1,9 +1,9 @@
-import { CostCalculator } from '@/src/components/calculator/CostCalculator'
-import { CostBreakdown } from '@/src/components/calculator/CostBreakdown'
-import { CostSheet } from '@/src/components/calculator/CostSheet'
-import { ModelViewer } from '@/src/components/visualization/ModelViewer'
-import { AppLayout } from '@/src/components/core/AppLayout'
-import { useCostCalculation } from '@/src/hooks/useCostCalculation'
+import { CostCalculator } from '@src/components/calculator/CostCalculator'
+import { CostBreakdown } from '@src/components/calculator/CostBreakdown'
+import { CostSheet } from '@src/components/calculator/CostSheet'
+import { ModelViewer } from '@src/components/visualization/ModelViewer'
+import { AppLayout } from '@src/components/core/AppLayout'
+import { useCostCalculation } from '@src/hooks/useCostCalculation'
 import { useState } from 'react'
  
 export default function HomePage() {

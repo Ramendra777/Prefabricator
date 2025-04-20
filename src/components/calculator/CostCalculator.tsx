@@ -1,7 +1,7 @@
-import { useCostCalculation } from '@/src/hooks/useCostCalculation'
-import { Input } from '@/src/components/core/Input'
-import { Select } from '@/src/components/core/Select'
-import { RangeSlider } from '@/src/components/core/RangeSlider'
+import { useCostCalculation } from '@src/hooks/useCostCalculation'
+import { Input } from '@src/components/core/Input'
+import { Select } from '@src/components/core/Select'
+import { RangeSlider } from '@src/components/core/RangeSlider'
 
 export function CostCalculator() {
   const { inputs, updateInputs } = useCostCalculation()

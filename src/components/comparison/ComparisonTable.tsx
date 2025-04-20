@@ -1,4 +1,4 @@
-import { useCostCalculation } from '@/src/hooks/useCostCalculation'
+import { useCostCalculation } from '@src/hooks/useCostCalculation'
 
 export function ComparisonTable() {
   const { inputs } = useCostCalculation()

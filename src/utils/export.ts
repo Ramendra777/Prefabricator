@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
-import type { CostBreakdownItem } from '@/types'
+import type { CostBreakdownItem } from '@/types/index'
 
 /**
  * Generate PDF report with Indian number formatting
@@ -62,6 +62,7 @@ export const generatePDF = (
  */
 export const generateExcel = (
   data: any[],
+  total?: number,  // Make total optional
   sheetName = 'Cost Estimate',
   fileName = 'prefab-estimate.xlsx'
 ): void => {

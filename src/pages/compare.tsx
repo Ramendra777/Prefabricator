@@ -1,6 +1,6 @@
-import { AppLayout } from '@/src/components/core/AppLayout'
-import { ComparisonTable } from '@/src/components/comparison/ComparisonTable'
-import { SavingsCard } from '@/src/components/comparison/SavingsCard'
+import { AppLayout } from '@src/components/core/AppLayout'
+import { ComparisonTable } from '@src/components/comparison/ComparisonTable'
+import { SavingsCard } from '@src/components/comparison/SavingsCard'
 import { FiClock, FiDollarSign, FiFeather } from 'react-icons/fi'
 
 export default function ComparisonPage() {

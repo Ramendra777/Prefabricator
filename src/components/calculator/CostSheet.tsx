@@ -1,6 +1,6 @@
-import { useCostCalculation } from '@/src/hooks/useCostCalculation'
-import { Button } from '@/src/components/core/Button'
-import { generatePDF, generateExcel } from '@/src/utils/export'
+import { useCostCalculation } from '@src/hooks/useCostCalculation'
+import { Button } from '@src/components/core/Button'
+import { generatePDF, generateExcel } from '@src/utils/export'
 
 export function CostSheet() {
   const { breakdown, total, inputs } = useCostCalculation()
@@ -20,7 +20,18 @@ export function CostSheet() {
           Detailed Cost Sheet
         </h3>
         <div className="flex gap-2">
-          <Button variant="secondary" onClick={() => generatePDF(tableData, total)}>
+        <Button 
+            variant="secondary" 
+            onClick={() => generatePDF(
+              "Cost Breakdown Report",
+              tableData.map(item => ({
+                name: item.desc,
+                value: item.amount
+              })),
+              total,
+              "cost-breakdown"
+            )}
+          >
             Export PDF
           </Button>
           <Button onClick={() => generateExcel(tableData, total)}>

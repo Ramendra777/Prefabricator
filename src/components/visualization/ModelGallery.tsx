@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment, useProgress, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { PrefabModel } from './PrefabModel'
-import { Button } from '@/src/components/core/Button'
+import { Button } from '@src/components/core/Button'
 
 type ModelGalleryProps = {
   materialType?: 'steel' | 'concrete' | 'wood'

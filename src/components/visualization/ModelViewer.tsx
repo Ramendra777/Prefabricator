@@ -2,7 +2,7 @@ import { Suspense, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment, Stats, useProgress, Html } from '@react-three/drei'
 import { PrefabModel } from './PrefabModel'
-import { Toggle } from '@/src/components/core/Toggle'
+import { Toggle } from '@src/components/core/Toggle'
 
 export function ModelViewer() {
   const [material, setMaterial] = useState<'steel' | 'concrete' | 'wood'>('steel')

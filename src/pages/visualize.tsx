@@ -1,5 +1,5 @@
-import { AppLayout } from '@/src/components/core/AppLayout'
-import { ModelGallery } from '@/src/components/visualization/ModelGallery'
+import { AppLayout } from '@src/components/core/AppLayout'
+import { ModelGallery } from '@src/components/visualization/ModelGallery'
 
 // Define the type for model presets
 type ModelPreset = {
